@@ -15,7 +15,7 @@ For CS students learning backprop. The autograd engine is
 ```bash
 npm install
 npm run dev      # http://localhost:5173
-npm test         # engine tests: hand-computed gradients, finite differences, chain rule per edge
+npm test         # engine tests: gradients by hand, finite differences, chain rule
 npm run build    # typecheck + production build into dist/
 ```
 
