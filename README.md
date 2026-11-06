@@ -1,5 +1,7 @@
 # micrograd 3D
 
+![micrograd 3D: stepping through backprop, one neuron's incoming weights lit by their gradient](docs/screenshot.png)
+
 Watch a tiny neural network learn, in 3D. A 2 → 8 → 8 → 1 network learns to separate two
 interleaving half-moons while every weight is drawn as a line that glows when backprop sends a
 large gradient through it. Pause at any moment and step through one point's backward pass,
@@ -7,8 +9,6 @@ neuron by neuron, with the chain rule written out.
 
 For CS students learning backprop. The autograd engine is
 [Karpathy's micrograd](https://github.com/karpathy/micrograd), rewritten from scratch in TypeScript.
-
-![micrograd 3D: the network mid-training, and the backprop walk-through](docs/screenshot.png)
 
 ## Run it
 
@@ -32,3 +32,9 @@ Keys: <kbd>Space</kbd> play / pause · <kbd>→</kbd> one training step · <kbd>
 6. Backprop mode rebuilds one point's graph, runs the same `backward()`, and replays it neuron by neuron: δ = (Σ w·δ) · tanh′(z), ∂L/∂w = a·δ.
 
 Spec and design decisions: [SPEC.md](SPEC.md).
+
+## License
+
+MIT. See [LICENSE](LICENSE).
+
+Built with Claude.
