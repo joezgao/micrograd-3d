@@ -37,4 +37,4 @@ Spec and design decisions: [SPEC.md](SPEC.md).
 
 MIT. See [LICENSE](LICENSE).
 
-Built with Claude.
+Built with Claude for Joe Gao.

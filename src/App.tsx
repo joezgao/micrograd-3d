@@ -222,6 +222,8 @@ export function App() {
           2 → 8 → 8 → 1 · tanh · hinge loss · SGD
           <br />
           engine: micrograd in TypeScript, after Karpathy
+          <br />
+          built with Claude for Joe Gao
         </footer>
       </aside>
     </main>
