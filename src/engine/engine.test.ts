@@ -5,6 +5,7 @@ import { createRng } from "./random";
 import { makeMoons } from "./data";
 import { Trainer, lossOf } from "./trainer";
 import { forwardNumeric } from "./fast";
+import { buildWalkthrough } from "./walkthrough";
 
 describe("Value backprop against hand-computed gradients", () => {
   it("f = a*b + c", () => {
@@ -105,6 +106,66 @@ describe("numeric forward (drawing fast path)", () => {
     const acts = model.forward([0.3, -0.7]);
     const fast = forwardNumeric(model, [0.3, -0.7]);
     acts.forEach((layer, l) => layer.forEach((v, j) => expect(fast[l][j]).toBeCloseTo(v.data, 12)));
+  });
+});
+
+describe("backprop walkthrough (one point, neuron by neuron)", () => {
+  const setup = () => {
+    const model = new MLP([2, 8, 8, 1], createRng(1337));
+    const data = makeMoons(100, 0.1, 7);
+    // A point the untrained model gets wrong, so gradient flows.
+    const p = data.find((q) => q.label * forwardNumeric(model, [q.x, q.y])[3][0] < 1)!;
+    return { model, p };
+  };
+
+  it("visits loss, output, hidden 2, hidden 1, inputs in backward order (20 steps)", () => {
+    const { model, p } = setup();
+    const w = buildWalkthrough(model, p);
+    expect(w.flows).toBe(true);
+    expect(w.steps.map((s) => s.layer)).toEqual([-1, 3, ...Array(8).fill(2), ...Array(8).fill(1), 0, 0]);
+  });
+
+  it("every edge obeys the chain rule: dL/dw = a_i · δ_j", () => {
+    const { model, p } = setup();
+    const w = buildWalkthrough(model, p);
+    const edges = w.steps.flatMap((s) => s.edges);
+    expect(edges).toHaveLength(2 * 8 + 8 * 8 + 8);
+    for (const e of edges) expect(e.grad).toBeCloseTo(e.input * e.delta, 12);
+  });
+
+  it("output δ is −y when the margin is violated, and grads match finite differences", () => {
+    const { model, p } = setup();
+    const w = buildWalkthrough(model, p);
+    const outEdges = w.steps[1].edges;
+    for (const e of outEdges) expect(e.delta).toBe(-p.label);
+    const h = 1e-6;
+    const lossAt = () => Math.max(0, 1 - p.label * forwardNumeric(model, [p.x, p.y])[3][0]);
+    for (const e of w.steps.flatMap((s) => s.edges)) {
+      const wv = model.layers[e.layer].neurons[e.to].w[e.from];
+      const orig = wv.data;
+      wv.data = orig + h;
+      const up = lossAt();
+      wv.data = orig - h;
+      const down = lossAt();
+      wv.data = orig;
+      expect(e.grad).toBeCloseTo((up - down) / (2 * h), 5);
+    }
+  });
+
+  it("leaves the training gradients on the parameters untouched", () => {
+    const { model, p } = setup();
+    model.parameters().forEach((q, i) => (q.grad = i * 0.01));
+    buildWalkthrough(model, p);
+    model.parameters().forEach((q, i) => expect(q.grad).toBe(i * 0.01));
+  });
+
+  it("a point beyond the margin has zero loss and no gradient", () => {
+    const t = new Trainer();
+    t.run(300);
+    const p = t.data.find((q) => q.label * forwardNumeric(t.model, [q.x, q.y])[3][0] > 1.2)!;
+    const w = buildWalkthrough(t.model, p);
+    expect(w.flows).toBe(false);
+    for (const e of w.steps.flatMap((s) => s.edges)) expect(e.grad).toBe(0);
   });
 });
 

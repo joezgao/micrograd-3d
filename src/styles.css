@@ -54,7 +54,9 @@ body {
   width: 72px; height: 2px; border-radius: 1px;
   background: linear-gradient(90deg, var(--hairline), var(--accent));
 }
+.done-line { width: 24px; height: 2px; border-radius: 1px; background: var(--muted); }
 .hint { margin-left: 12px; }
+.legend span { white-space: nowrap; }
 
 .panel {
   border-left: 1px solid var(--hairline);
@@ -77,6 +79,7 @@ button {
 button:hover { border-color: var(--muted); }
 button.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
 button.primary:hover { opacity: 0.85; }
+button[aria-disabled="true"]:hover { border-color: var(--hairline); }
 button:focus-visible, input:focus-visible, canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .speed { display: grid; grid-template-columns: auto 1fr 40px; align-items: center; gap: 12px; color: var(--muted); }
@@ -96,6 +99,22 @@ input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border-radius
 .stats dt { color: var(--muted); }
 .stats dd { margin: 4px 0 0; font-size: 16px; color: var(--text); font-variant-numeric: tabular-nums; }
 
+button:disabled, button[aria-disabled="true"] { opacity: 0.35; cursor: default; }
+.walk-open { width: 100%; color: var(--muted); }
+.walk-open:hover { color: var(--text); }
+
+.walk { display: flex; flex-direction: column; gap: 16px; }
+.walk-progress { height: 2px; background: var(--hairline); }
+.walk-progress span { display: block; height: 100%; background: var(--text); transition: width 300ms var(--ease); }
+.walk-card { min-height: 188px; }
+.walk-count { color: var(--muted); margin: 0 0 8px; }
+.walk-card h2 { font-size: 16px; font-weight: 600; margin: 0 0 8px; }
+.walk-card ul { list-style: none; margin: 0; padding: 0; color: var(--muted); line-height: 1.7; }
+.walk-card li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.walk-card li + li { margin-top: 4px; }
+.walk-val { white-space: nowrap; text-align: right; color: var(--text); font-variant-numeric: tabular-nums; }
+.walk-card li:first-child { color: var(--text); }
+
 figure { margin: 0; }
 figcaption { color: var(--muted); margin-bottom: 8px; }
 .loss { display: block; width: 100%; height: 96px; }
@@ -113,6 +132,9 @@ footer { color: var(--muted); margin-top: auto; padding-top: 8px; line-height: 1
   .head { padding: 24px 16px 0; border-left: 0; }
   .stage { height: 52vh; min-height: 340px; border-bottom: 1px solid var(--hairline); }
   .legend { left: 16px; bottom: 14px; }
+  .legend { gap: 8px; }
+  .legend .ramp { width: 40px; }
+  .legend.walking .hint { display: none; }
   .panel { border-left: 0; padding: 24px 16px 32px; overflow: visible; }
   .lede { font-size: 14px; }
 }
