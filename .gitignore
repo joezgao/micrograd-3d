@@ -1,0 +1,8 @@
+.factory/logs/
+.tmp/
+.env
+.env.*
+.claude/settings.local.json
+.claude/worktrees/
+node_modules/
+dist/
