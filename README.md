@@ -31,7 +31,6 @@ Keys: <kbd>Space</kbd> play / pause · <kbd>→</kbd> one training step · <kbd>
 5. The 3D view (React Three Fiber, loaded lazily) colours each edge by |∂L/∂w| from that step; bloom makes the largest ones glow.
 6. Backprop mode rebuilds one point's graph, runs the same `backward()`, and replays it neuron by neuron: δ = (Σ w·δ) · tanh′(z), ∂L/∂w = a·δ.
 
-Spec and design decisions: [SPEC.md](SPEC.md).
 
 ## License
 
