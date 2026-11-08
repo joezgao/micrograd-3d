@@ -6,3 +6,9 @@
 .claude/worktrees/
 node_modules/
 dist/
+
+# Private working files: kept locally, never published
+SPEC.md
+CLAUDE.md
+.factory/
+.claude/
