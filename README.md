@@ -12,6 +12,8 @@ For CS students learning backprop. The autograd engine is
 
 ## Run it
 
+**Live:** [joezgao.github.io/micrograd-3d/](https://joezgao.github.io/micrograd-3d/) (nothing to install).
+
 ```bash
 npm install
 npm run dev      # http://localhost:5173
