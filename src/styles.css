@@ -144,3 +144,7 @@ footer { color: var(--muted); margin-top: auto; padding-top: 8px; line-height: 1
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+/* craft floor (DESIGN.md 11/9): neutral text selection, press feedback */
+::selection{background:rgba(128,128,128,.35)}
+button:active:not(:disabled){filter:brightness(.85)}
