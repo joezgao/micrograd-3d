@@ -49,7 +49,7 @@ Keys: <kbd>Space</kbd> play / pause · <kbd>→</kbd> one training step · <kbd>
 
 - Scalar autograd: every weight is its own `Value` object, so it is slow by design. It suits a 2 → 8 → 8 → 1 network and 100 points, not real datasets.
 - A toy problem: two half-moons in 2D. The accuracy shown is on the same 100 points the network trains on; there is no held-out set.
-- One training recipe: hinge loss, `tanh`, L2 regularisation (1e-4) and plain full-batch SGD, with no momentum or learning-rate schedule.
+- One training recipe: hinge loss, `tanh`, L2 regularisation (1e-4) and full-batch SGD with the learning rate decaying as 1 / (1 + step / 300); no momentum.
 
 ## License
 
