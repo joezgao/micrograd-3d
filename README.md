@@ -34,6 +34,23 @@ Keys: <kbd>Space</kbd> play / pause · <kbd>→</kbd> one training step · <kbd>
 6. Backprop mode rebuilds one point's graph, runs the same `backward()`, and replays it neuron by neuron: δ = (Σ w·δ) · tanh′(z), ∂L/∂w = a·δ.
 
 
+## What the tests check
+
+`npm test` runs 15 tests (`src/engine/engine.test.ts`):
+
+- gradients of small expressions against hand-computed values, including a value used twice and shared parents;
+- `pow`, `div`, `sub`, `neg`, `relu` and `exp` gradients;
+- every parameter of a 2-4-4-1 network against finite differences;
+- the fast numeric forward pass used for drawing matches the `Value` forward pass, layer by layer;
+- the backprop walkthrough: backward order, the chain rule on every edge, the margin cases, and that it leaves the training gradients untouched;
+- training on the moons: the loss falls and accuracy reaches at least 95%, and reset replays the same run.
+
+## Limits
+
+- Scalar autograd: every weight is its own `Value` object, so it is slow by design. It suits a 2 → 8 → 8 → 1 network and 100 points, not real datasets.
+- A toy problem: two half-moons in 2D. The accuracy shown is on the same 100 points the network trains on; there is no held-out set.
+- One training recipe: hinge loss, `tanh`, L2 regularisation (1e-4) and plain full-batch SGD, with no momentum or learning-rate schedule.
+
 ## License
 
 MIT. See [LICENSE](LICENSE).
