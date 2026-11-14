@@ -1,6 +1,10 @@
-# Live demo on GitHub Pages. Manual trigger only (Actions tab -> Run workflow) until Pages is switched on for this repo.
+# Live demo on GitHub Pages: deploys on every push to main that touches the site (docs-only pushes skip it),
+# or by hand from the Actions tab.
 name: Pages
 on:
+  push:
+    branches: [main]
+    paths-ignore: ['**.md', 'LICENSE']
   workflow_dispatch:
 permissions:
   contents: read
