@@ -9,7 +9,15 @@
     <title>micrograd 3D</title>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Static first frame: painted before the JS bundle arrives, replaced by React on first render.
+         Kept identical to App.tsx by src/shell.test.ts. -->
+    <div id="root"><main class="app">
+      <header class="head">
+        <h1>micrograd 3D</h1>
+        <p class="lede">A tiny neural network learning two moons. Every line is a weight; the brighter it glows, the larger the gradient backprop just sent through it.</p>
+      </header>
+      <section class="stage" aria-label="Network"><p class="stage-note mono">preparing the 3D view…</p></section>
+    </main></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
