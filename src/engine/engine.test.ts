@@ -176,7 +176,7 @@ describe("training on moons", () => {
     t.run(400);
     expect(t.history.at(-1)!).toBeLessThan(first * 0.25);
     expect(t.accuracy).toBeGreaterThanOrEqual(0.95);
-  });
+  }, 30_000); // ~1 s on an M5, over 5 s (Vitest's default) on GitHub's Pages runner
 
   it("reset replays the same run (deterministic)", () => {
     const t = new Trainer();
