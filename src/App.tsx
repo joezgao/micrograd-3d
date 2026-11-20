@@ -224,7 +224,7 @@ export function App() {
           <br />
           engine: micrograd in TypeScript, after Karpathy
           <br />
-          built with Claude for Joe Gao
+          How it was made: idea, direction and every taste call by Joe; code written by Claude Code under his review.
         </footer>
       </aside>
     </main>
