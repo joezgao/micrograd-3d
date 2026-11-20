@@ -129,6 +129,7 @@ export function App() {
   return (
     <main className="app">
       <header className="head">
+        <a className="jg-home" href="https://joezgao.github.io/work/">← Joe Gao</a>
         <h1>micrograd 3D</h1>
         <p className="lede">
           A tiny neural network learning two moons. Every line is a weight; the brighter it glows, the larger the

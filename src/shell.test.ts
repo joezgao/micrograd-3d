@@ -20,4 +20,10 @@ describe("static first frame", () => {
     expect(pick(html, /class="lede">([^<]+)</)).toBe(pick(app, /className="lede">([^<]+)</));
     expect(pick(html, /class="stage-note mono">([^<]+)</)).toBe(pick(app, /className="stage-note mono">([^<]+)</));
   });
+
+  it("links back to the site in both", () => {
+    const home = /<a class(?:Name)?="jg-home" href="([^"]+)">← Joe Gao<\/a>/;
+    expect(pick(html, home)).toBe("https://joezgao.github.io/work/");
+    expect(pick(app, home)).toBe("https://joezgao.github.io/work/");
+  });
 });
